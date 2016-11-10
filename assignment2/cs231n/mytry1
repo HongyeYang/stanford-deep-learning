@@ -1,0 +1,10 @@
+sample_mean,sample_var,x,x_normalized,gamma,beta,eps=cache
+  dbeta=np.sum(dout,axis=0,keepdims=True)
+  dnormal=dout*gamma
+  dvar=1/np.sqrt(sample_var+eps)
+  xsxbar=x-sample_mean
+  dgamma=np.sum(x_normalized*dout,axis=0,keepdims=True)
+  dx=dnormal*dvar
+  dx+=2/N*np.sum(-0.5*dnormal*(xsxbar)*((dvar)**3),axis=0,keepdims=True)*xsxbar
+  dx+=1/N*np.sum(-dnormal*dvar,axis=0,keepdims=True)
+  dx+=1/(N*N)*np.sum(-0.5*dnormal*xsxbar*(dvar**3),axis=0,keepdims=True)*np.sum(-2*xsxbar,axis=0,keepdims=True)
